@@ -40,6 +40,8 @@ fn main() {
     let mut needed_inputs = VecDeque::new();
 
     loop {
+        println!("{:?}", Dot::with_config(&factory, &[Config::EdgeNoLabel]));
+
         factory.reverse();
         let mut bfs = Bfs::new(&factory, end);
 
@@ -52,9 +54,7 @@ fn main() {
 
             let building = &mut factory[node_index];
 
-            for _ in 0..input_buildings_count
-            /* - building.numbers.len() */
-            {
+            for _ in 0..input_buildings_count {
                 needed_inputs.push_back(node_index);
             }
 
@@ -75,23 +75,15 @@ fn main() {
             let inputted_building = &mut factory[inputted_building_index];
             if inputted_building.building_type.get_input_count() > inputted_building.numbers.len() {
                 inputted_building.numbers.push(result);
-                // } else {
-                // needed_inputs.push_front(inputted_building_index);
             }
-
-            println!("{:?}", Dot::with_config(&factory, &[Config::EdgeNoLabel]));
-            println!("{needed_inputs:#?}");
         }
 
         factory.reverse();
 
         let mut buf = String::new();
-        print!("...");
+
+        print!("Press enter to tick...");
         stdout().flush().unwrap();
         stdin().read_line(&mut buf).unwrap();
-        println!();
-        println!();
-        println!();
-        println!("{:?}", Dot::with_config(&factory, &[Config::EdgeNoLabel]));
     }
 }
