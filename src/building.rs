@@ -1,5 +1,7 @@
 use std::fmt::Debug;
 
+use rand::Rng;
+
 use crate::NumberItem;
 
 #[derive(Debug)]
@@ -57,7 +59,7 @@ impl BuildingType for Adder {
 pub struct Generator;
 impl BuildingType for Generator {
     fn perform_action(&self, _contained_numbers: &[NumberItem]) -> Result<Option<NumberItem>, ()> {
-        Ok(Some(1.0))
+        Ok(Some(rand::thread_rng().gen_range(0..10) as NumberItem))
     }
 
     fn get_input_count(&self) -> usize {
