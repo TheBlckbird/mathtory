@@ -1,9 +1,6 @@
 use std::{
     collections::VecDeque,
     io::{stdin, stdout, Write},
-    result,
-    thread::sleep,
-    time::Duration,
 };
 
 use building::{Adder, Building, End, Generator};
