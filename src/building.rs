@@ -1,8 +1,6 @@
 use std::fmt::Debug;
 
-use rand::Rng;
-
-use crate::NumberItem;
+use crate::{buildings::end::End, NumberItem};
 
 #[derive(Debug)]
 pub struct Building {
@@ -41,41 +39,4 @@ impl Default for Building {
 pub trait BuildingType: Debug {
     fn perform_action(&self, contained_numbers: &[NumberItem]) -> Result<Option<NumberItem>, ()>;
     fn get_input_count(&self) -> usize;
-}
-
-#[derive(Debug)]
-pub struct Adder;
-impl BuildingType for Adder {
-    fn perform_action(&self, contained_numbers: &[NumberItem]) -> Result<Option<NumberItem>, ()> {
-        Ok(Some(contained_numbers[0] + contained_numbers[1]))
-    }
-
-    fn get_input_count(&self) -> usize {
-        2
-    }
-}
-
-#[derive(Debug)]
-pub struct Generator;
-impl BuildingType for Generator {
-    fn perform_action(&self, _contained_numbers: &[NumberItem]) -> Result<Option<NumberItem>, ()> {
-        Ok(Some(rand::thread_rng().gen_range(0..10) as NumberItem))
-    }
-
-    fn get_input_count(&self) -> usize {
-        0
-    }
-}
-
-#[derive(Debug)]
-pub struct End;
-impl BuildingType for End {
-    fn perform_action(&self, contained_numbers: &[NumberItem]) -> Result<Option<NumberItem>, ()> {
-        println!("Reached an end: {}", contained_numbers.first().unwrap());
-        Ok(None)
-    }
-
-    fn get_input_count(&self) -> usize {
-        1
-    }
 }

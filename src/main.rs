@@ -3,7 +3,11 @@ use std::{
     io::{stdin, stdout, Write},
 };
 
-use building::{Adder, Building, End, Generator};
+use building::Building;
+use buildings::{
+    adder::Adder, divider::Divider, end::End, generator::Generator, multiplicator::Multiplicator,
+    subtractor::Subtractor,
+};
 use petgraph::{
     dot::{Config, Dot},
     visit::Bfs,
@@ -11,6 +15,7 @@ use petgraph::{
 };
 
 mod building;
+mod buildings;
 
 pub type NumberItem = f32;
 
@@ -20,16 +25,25 @@ fn main() {
     let generator1 = factory.add_node(Building::new(Box::new(Generator)));
     let generator2 = factory.add_node(Building::new(Box::new(Generator)));
     let generator3 = factory.add_node(Building::new(Box::new(Generator)));
-    let adder1 = factory.add_node(Building::new(Box::new(Adder)));
-    let adder2 = factory.add_node(Building::new(Box::new(Adder)));
+    let generator4 = factory.add_node(Building::new(Box::new(Generator)));
+    let generator5 = factory.add_node(Building::new(Box::new(Generator)));
+
+    let adder = factory.add_node(Building::new(Box::new(Adder)));
+    let subtractor = factory.add_node(Building::new(Box::new(Subtractor)));
+    let multiplicator = factory.add_node(Building::new(Box::new(Multiplicator)));
+    let divider = factory.add_node(Building::new(Box::new(Divider)));
     let end = factory.add_node(Building::new(Box::new(End)));
 
     factory.extend_with_edges([
-        (generator1, adder1),
-        (generator2, adder1),
-        (generator3, adder2),
-        (adder1, adder2),
-        (adder2, end),
+        (generator1, adder),
+        (generator2, adder),
+        (generator3, subtractor),
+        (generator4, subtractor),
+        (adder, multiplicator),
+        (subtractor, multiplicator),
+        (multiplicator, divider),
+        (generator5, divider),
+        (divider, end),
     ]);
 
     //
