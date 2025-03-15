@@ -1,6 +1,6 @@
 # Mathtory
 
-This is a tiny example of the logic behind factory builders.
+Mathtory is a tiny example of the logic behind factory builders.
 
 I might do some more with this in the future, but for now it only was a small experiment.
 
